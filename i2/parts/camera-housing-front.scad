@@ -34,7 +34,13 @@ FN = 64;
 
 // Front panel
 difference() {
-    cube([BODY_OUT_X, PANEL_THICK, BODY_OUT_Z]);
+    translate ([0, PANEL_THICK, 0]) {
+    rotate ([90, 0, 0]) {
+    linear_extrude(height = PANEL_THICK) {
+        import(file = "../drawings/camera.dxf", layer = "openscad-camera-front", $fn=FN);
+    }
+}
+}
 
     // Camera hole
     union () {
@@ -115,15 +121,17 @@ difference () {
     }
 }
 
-// Bottom panel
-cube([BODY_OUT_X, BODY_OUT_Y, PANEL_THICK]);
-
-// Right panel
+// Panels
 difference () {
-    translate([BODY_OUT_X - PANEL_THICK, 0, 0]) {
-        cube([PANEL_THICK, BODY_OUT_Y, BODY_OUT_Z]);
+translate ([0, BODY_OUT_Y, 0]) {
+    rotate ([90, 0, 0]) {
+    linear_extrude(height = BODY_OUT_Y) {
+        import(file = "../drawings/camera.dxf", layer = "openscad-camera-walls", $fn=FN);
     }
-    translate ([BODY_OUT_X - PANEL_THICK - MARGIN, 0, 0]) {
+}
+}
+
+translate ([BODY_OUT_X - PANEL_THICK - MARGIN, 0, 0]) {
         rotate ([90, 0, 90]) {
             linear_extrude(height = PANEL_THICK + MARGIN * 2) {
                 import(file = "../drawings/camera.dxf", layer = "openscad-servo-hole", $fn=FN);

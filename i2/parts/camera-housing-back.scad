@@ -27,8 +27,12 @@ SCREWS_DEEP = 5;
 
 // Back panel
 difference () {
-translate ([0, BODY_OUT_Y - PANEL_THICK, PANEL_THICK]) {
-    cube([BODY_OUT_X - PANEL_THICK, PANEL_THICK, BODY_OUT_Z - PANEL_THICK]);
+translate ([0, BODY_OUT_Y, 0]) {
+    rotate ([90, 0, 0]) {
+    linear_extrude(height = PANEL_THICK) {
+        import(file = "../drawings/camera.dxf", layer = "openscad-camera-back", $fn=FN);
+    }
+}
 }
 union () {
 translate ([0, BODY_OUT_Y + MARGIN, 0]) {
@@ -45,18 +49,17 @@ cube ([CABLE_HOLE_W, PANEL_THICK + MARGIN * 2, CABLE_HOLE_H + MARGIN]);
 }
 
 // Left panel
-translate ([0, PANEL_THICK, PANEL_THICK]) {
-    cube([PANEL_THICK, BODY_OUT_Y - PANEL_THICK, BODY_OUT_Z - PANEL_THICK]);
+translate ([0, BODY_OUT_Y, 0]) {
+    rotate ([90, 0, 0]) {
+    linear_extrude(height = BODY_OUT_Y - PANEL_THICK) {
+        import(file = "../drawings/camera.dxf", layer = "openscad-camera-left", $fn=FN);
+    }
+}
 }
 translate ([MARGIN, AXIS_Y, AXIS_Z]) {
 rotate ([0, -90, 0]) {
 cylinder (AXIS_H + MARGIN, AXIS_R, AXIS_R, $fn=FN);
 }
-}
-
-// Top panel
-translate ([0, PANEL_THICK, BODY_OUT_Z - PANEL_THICK]) {
-cube([BODY_OUT_X - PANEL_THICK, BODY_OUT_Y - PANEL_THICK, PANEL_THICK]);
 }
 
 // Screws to front
